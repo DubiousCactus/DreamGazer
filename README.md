@@ -1,8 +1,6 @@
 ## Welcome to Dream Gazer
 
-You can use the [editor on GitHub](https://github.com/M4gicT0/DreamGlazer/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This project was created during AUHack 2018. Dream Glazer is an Art experiment: glaze at portraits and admire the uncanny outcome you just created.
 
 ### Markdown
 
