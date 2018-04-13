@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Welcome to Dream Gazer
 
 You can use the [editor on GitHub](https://github.com/M4gicT0/DreamGlazer/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
