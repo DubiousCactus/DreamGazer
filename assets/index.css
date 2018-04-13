@@ -15,3 +15,16 @@ body {
 	font-size: 22px;
 }
 
+.gaze {
+	display: none;
+}
+
+#placeholder {
+	text-align: center;
+	font-size: 52px;
+	font-family: 'Kalam';
+	font-weight: bold;
+	margin-top: 130px;
+	margin-bottom: 330px;
+}
+

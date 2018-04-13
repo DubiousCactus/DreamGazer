@@ -9,8 +9,9 @@
   
    $('#start').click(function(e) {
    	   console.log('clicked');
-   	   $('#header').slideToggle(500, function() {
-   	   	   console.log('slideToggle');
+   	   $('#header').slideUp("slow", function() {
+   	   	   $('#placeholder').fadeOut('fast');
+		   $('.gaze').slideDown("slow");
 	   });
    });
 })();
