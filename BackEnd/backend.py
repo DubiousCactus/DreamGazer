@@ -46,20 +46,13 @@ class Image:
             x = np.asarray(mean[0] - (window_size-1)/2,dtype=int)
             y = np.asarray(mean[1] - (window_size-1)/2,dtype=int)
             extract = np.empty([window_size,window_size,3], dtype=int)
-
-            n = 0
-            for i in range(x,x+window_size-1):
-                m = 0
-                for j in range(y,y+window_size-1):
-                    extract[n,m,:] = self.datafile[i,j,:]
-                    m = m + 1
-                n = n +1
-
+            extract = self.datafile[x:x+window_size,y:y+window_size,:]
             print(extract.shape)
             extracted_patches.append(extract) 
             cv2.imshow('Patch',extract)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
+
         return extracted_patches
             
 
@@ -101,12 +94,12 @@ def postData(imageid):
     
     x = Image(content,imageid)
     x.datafile = cv2.imread("images/johnny850x850.jpg")
-    cv2.imshow('Patch',x.datafile)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-    
+    #cv2.imshow('Patch',x.datafile)
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
     means = x.clusterData(2)
-    print(x.extract([[400,400]],49))   
+
+    x.extract(means,300)  
             
     
     print("Data Received!")
