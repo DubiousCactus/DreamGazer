@@ -29,6 +29,10 @@ window.onload = function () {
             $('.calibration').slideDown("slow");
             setTimeout(slideShow, 3000);
         });
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "assets/webgazer.js.";
+        document.getElementsByTagName("head")[0].appendChild(script);
 
         StartCalibration();  // CNC added
         window.open("calibrationinstructions.html", "", "width=450,height=450");
@@ -76,7 +80,6 @@ window.onload = function () {
             .begin()
             .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
     }
-
 
     function slideShow() {
         $('.gaze').attr('src', photos[i]).fadeIn('slow')
@@ -137,5 +140,4 @@ window.onload = function () {
     }
 
     setTimeout(setListener, 300);
-
 };
