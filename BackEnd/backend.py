@@ -27,15 +27,15 @@ class Image:
         means = kmeans(self.points,classes)
         return means
     
-    def extract(self)
+    def extract(self):
         """Extract Small Image Feature"""
         return 1
 
-    def assemble(self)
+    def assemble(self):
         """Assemble Feature Collage"""
         return 1
 
-    def dream(self)
+    def dream(self):
         """Dream"""
         return 1
 
@@ -45,7 +45,7 @@ def postData(imageid):
     if request.method == 'POST':
         content = request.get_json()
         
-        x = Image(content)
+        x = Image(content,imageid)
         print(x.clusterData(2))
                 
         
