@@ -8,11 +8,16 @@
 window.onload = function () {
     var BACKEND_URL = 'http://localhost:5000';
     var photos = [
-        BACKEND_URL + '/images/johnny850x850.jpg',
-        BACKEND_URL + '/images/clint850x850.jpg',
-        BACKEND_URL + '/images/clooney850x850.jpg',
-        BACKEND_URL + '/images/martin2850x850.jpg',
-        BACKEND_URL + '/images/martin850x850.jpg',
+        BACKEND_URL + '/images/image1.jpg',
+        BACKEND_URL + '/images/image2.jpg',
+        BACKEND_URL + '/images/image3.jpg',
+        BACKEND_URL + '/images/image4.jpg',
+        BACKEND_URL + '/images/image5.jpg',
+        BACKEND_URL + '/images/image6.jpg',
+        BACKEND_URL + '/images/image7.jpg',
+        BACKEND_URL + '/images/image8.jpg',
+        BACKEND_URL + '/images/image9.jpg',
+        BACKEND_URL + '/images/image10.jpg'
     ];
     var screen = {};
     var image = {};
@@ -65,7 +70,7 @@ window.onload = function () {
                 if (data == null) {
                     return;
                 }
-                if (read && (previousClock == null || (clock - previousClock) >= interval)) {
+                //if (read && (previousClock == null || (clock - previousClock) >= interval)) {
                     if (typeof coords[i] == 'undefined') {
                         coords[i] = [];
                     }
@@ -74,7 +79,7 @@ window.onload = function () {
                         'x': data.x,
                         'y': data.y
                     });
-                }
+                //}
             })
             .begin()
             .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
@@ -114,8 +119,14 @@ window.onload = function () {
     }
 
     function submit() {
-        $.get(BACKEND_URL + '/api/mozaique', function (data) {
+        $.get(BACKEND_URL + '/api/mosaic', function (data) {
             console.log(data);
+            photos = [];
+            obj = JSON.parse(data);
+            obj.forEach(function(mosaicUrl) {
+                photos.push(BACKEND_URL + mosaicUrl);
+            });
+            i = 0; //Reset slideshow
         });
     }
 
