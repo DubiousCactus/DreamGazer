@@ -24,7 +24,7 @@ CORS(app)
 class Image:
     datafile = []
 
-    def __init__(self,json_data,imageid):
+    def __init__(self, json_data, imageid):
         self.imageid = imageid
         self.screenWidth = json_data["screenWidth"]
         self.screenHeight = json_data["screenHeight"]
@@ -41,18 +41,18 @@ class Image:
         self.points = np.array(self.points, dtype=float)
                 
 
-    def clusterData(self,classes):
+    def clusterData(self, classes):
         """Get the cluster mean points"""
         #self.points = 
         #means,ops = kmeans(self.points,classes)
-        means = np.asarray([[0,0],[1400,200],[0,0],[0,0],[0,0]],dtype=int)
+        means = np.asarray([[0, 0], [1400, 200], [0, 0], [0, 0], [0, 0]], dtype=int)
         # Subtract Offset to image coordinate system
         means[:,0] = means[:,0] - self.imgOffsetX 
         means[:,1] = means[:,1] - self.imgOffsetY
 
         return means.tolist()
 
-    def checkMeans(self,means,window_size):
+    def checkMeans(self, means, window_size):
         """Check if the mean values will produce proper patches"""
         # Remove Outliers
         means2 = []
@@ -65,15 +65,15 @@ class Image:
 
         # Correct when too near to the border
         for i in range(0,len(means)):
-            if  means[i][0]  < window_size/2:
-                means[i][0] =  window_size/2
-            if  means[i][0] > (self.imgWidth - window_size/2): 
-                means[i][0] = self.imgWidth - window_size/2
+            if  means[i][0]  < window_size / 2:
+                means[i][0] =  window_size / 2
+            if  means[i][0] > (self.imgWidth - window_size / 2): 
+                means[i][0] = self.imgWidth - window_size / 2
     
-            if  means[i][1] <  window_size/2:
-                means[i][1] = window_size/2
-            if  means[i][1] > (self.imgHeight - window_size/2): 
-                means[i][1] = self.imgHeight - window_size/2
+            if  means[i][1] <  window_size / 2:
+                means[i][1] = window_size / 2
+            if  means[i][1] > (self.imgHeight - window_size / 2): 
+                means[i][1] = self.imgHeight - window_size / 2
         #print(means)
         return means
     
@@ -131,15 +131,18 @@ def dream(self):
 @app.route('/api/<imageid>', methods=['POST'])
 def postData(imageid):
     content = request.get_json()
+
+    if len(content['coordinates']) == 0:
+        return("ERROR: No coordinates !")
     
     window_size = 200
     number_of_classes = 4
 
-    x = Image(content,imageid)
-    x.datafile = cv2.imread("images/image" + str(imageid) + ".jpg")
+    x = Image(content, imageid)
+    x.datafile = cv2.imread("images/image{}.jpg".format(imageid))
 
     means = x.clusterData(number_of_classes)
-    means = x.checkMeans(means,window_size)
+    means = x.checkMeans(means, window_size)
 
 
     global patches
@@ -155,9 +158,9 @@ def getData():
     mosaics = assemble(patches)
     urls =[]
 
-    for i,mosaic in enumerate(mosaics):
-        cv2.imwrite("output/mosaic" + str(i) + ".jpg",mosaic)
-        urls.append("output/mosaic" + str(i) + ".jpg")
+    for i, mosaic in enumerate(mosaics):
+        cv2.imwrite("output/mosaic{}.jpg".format(i), mosaic)
+        urls.append("output/mosaic{}.jpg".format(i))
 
     return jsonify(urls)
  
@@ -183,4 +186,4 @@ def purge():
     return("OK")
 
 if __name__ == '__main__':
-    app.run(host= '0.0.0.0',debug=True)
+    app.run(host= '0.0.0.0', debug=True)
