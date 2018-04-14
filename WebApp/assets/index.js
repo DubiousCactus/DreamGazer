@@ -56,6 +56,7 @@ function StartCalibration() {
     document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
     ClearCalibration();
     PopUpInstruction();
+    webgazer.begin();
 }
 
 function slideShow() {
@@ -106,8 +107,10 @@ window.onload = function () {
             $('.calibration').slideDown("slow");
         });
 
+        setListener();
         StartCalibration();
     });
+
 
     function setListener() {
         webgazer.setRegression('ridge') /* currently must set regression and tracker */
@@ -130,5 +133,5 @@ window.onload = function () {
             .begin()
             .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
     }
-    setTimeout(setListener, 300);
+
 };
