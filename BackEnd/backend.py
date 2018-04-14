@@ -38,22 +38,27 @@ class Image:
     def extract(self,means,window_size):
         """Extract small patches around"""
         
+        extracted_patches = []
         for mean in means:
             x = np.asarray(mean[0] - (window_size-1)/2,dtype=int)
             y = np.asarray(mean[1] - (window_size-1)/2,dtype=int)
+            extract = np.empty([window_size,window_size,3], dtype=int)
+
             n = 0
-            m = 0
-            extract = np.empty([window_size+1,window_size+1,3])
-            print(self.datafile)
             for i in range(x,x+window_size-1):
+                m = 0
                 for j in range(y,y+window_size-1):
                     extract[n,m,:] = self.datafile[i,j,:]
                     m = m + 1
                 n = n +1
-            return extract
-            
 
-        return 1
+            print(extract.shape)
+            extracted_patches.append(extract) 
+            cv2.imshow('Patch',extract)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+        return extracted_patches
+            
 
     def assemble(self):
         """Assemble Feature Collage"""
@@ -69,11 +74,13 @@ def postData(imageid):
     content = request.get_json()
     
     x = Image(content,imageid)
-    x.datafile = cv2.imread("resources/image" + str(imageid) + ".png")
-    print(x.datafile.shape)
+    x.datafile = cv2.imread("images/johnny850x850.jpg")
+    cv2.imshow('Patch',x.datafile)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    
     means = x.clusterData(2)
-    x.extract(means[0],49)    
-    print(x.clusterData(2))
+    print(x.extract([[400,400]],49))   
             
     
     print("Data Received!")
