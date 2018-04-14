@@ -62,7 +62,8 @@ $(document).ready(function () {
 
       if (PointCalibrate >= 9){ // last point is calibrated
       var accuracyLabel = "<a>Calibrated!</a>";
-       document.getElementById("Accuracy").innerHTML = accuracyLabel; 
+      document.getElementById("Accuracy").innerHTML = accuracyLabel;
+      document.getElementById("")
        webgazer.end();
        
 

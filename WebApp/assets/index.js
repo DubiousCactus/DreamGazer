@@ -27,7 +27,6 @@ window.onload = function () {
             //$('#placeholder').fadeOut('fast');
             $('#show').fadeOut('fast');
             $('.calibration').slideDown("slow");
-            setTimeout(slideShow, 3000);
         });
         var script = document.createElement("script");
         script.type = "text/javascript";
