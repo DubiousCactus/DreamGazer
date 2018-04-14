@@ -34,9 +34,10 @@ function PopUpInstruction() {
 * checks that all buttons have been clicked 5 times each, and then goes on to measuring the precision
 */
 $(document).ready(function () {
+    console.log("Calibrating");
     ClearCanvas();
      $(".Calibration").click(function(){ // click event on the calibration buttons
-
+         console.log("Clicked a Calibration Point");
       var id = $(this).attr('id');
 
       if (!CalibrationPoints[id]){ // initialises if not done
@@ -60,7 +61,7 @@ $(document).ready(function () {
       }
 
       if (PointCalibrate >= 9){ // last point is calibrated
-        var accuracyLabel = "<a>Calibrated!</a>";
+      var accuracyLabel = "<a>Calibrated!</a>";
        document.getElementById("Accuracy").innerHTML = accuracyLabel; 
        webgazer.end();
        
@@ -126,7 +127,8 @@ $(document).ready(function () {
  * Show the Calibration Points
  */
 function ShowCalibrationPoint() {
-    $(".Calibration").show();
+    console.log("ShowCalibrationPoint");
+    $(".Calibration").show(); 
     $("#Pt5").hide(); // initially hides the middle button
 }
 
