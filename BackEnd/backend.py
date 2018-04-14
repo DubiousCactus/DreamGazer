@@ -96,7 +96,7 @@ def postData(imageid):
     content = request.get_json()
     
     x = Image(content,imageid)
-    x.datafile = cv2.imread("images/johnny850x850.jpg")
+    x.datafile = cv2.imread("images/martin2850x850.jpg")
     #cv2.imshow('Patch',x.datafile)
     #cv2.waitKey(0)
     #cv2.destroyAllWindows()
