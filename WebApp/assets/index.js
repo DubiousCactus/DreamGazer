@@ -41,14 +41,15 @@ function getImageInfo() {
 
 function changeImage() {
     if (i >= photos.length) {
+        webgazer.end();
         submit();
         return;
     }
 
     read = false;
     sendData();
-    $('.gaze').fadeOut('slow');
-    $('.gaze').attr('src', photos[i++]).fadeIn('slow')
+    $('.gaze').fadeOut('fast');
+    $('.gaze').attr('src', photos[i++]).fadeIn('slow');
     read = true;
 }
 
@@ -59,7 +60,8 @@ function StartCalibration() {
 }
 
 function slideShow() {
-    $('.gaze').attr('src', photos[i]).fadeIn('slow')
+    $.post(BACKEND_URL + '/api/purge');
+    $('.gaze').attr('src', photos[i++]).fadeIn('slow');
     getScreenInfo();
     getImageInfo();
     read = true;
@@ -92,8 +94,14 @@ function sendData() {
 }
 
 function submit() {
-    $.get(BACKEND_URL + '/api/mozaique', function (data) {
+    $.get(BACKEND_URL + '/api/mosaic', function (data) {
         console.log(data);
+        photos = [];
+        i = 0;
+        obj = JSON.parse(data);
+        obj.forEach(function(url) {
+            photos.push(BACKEND_URL + url);
+        });
     });
 }
 
