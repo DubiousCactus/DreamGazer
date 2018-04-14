@@ -1,20 +1,51 @@
 #! flask/bin/python
 # -*- coding: utf-8 -*-
 import json 
+import numpy as np
+from scipy.cluster.vq import kmeans
 from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 
 
+
+class Image:
+
+    def __init__(self,json_data):
+        self.screenWidth = json_data["screenWidth"]
+        self.screenHeight = json_data["screenHeight"]
+        self.imgWidth = json_data["imgWidth"]
+        self.imgHeight = json_data["imgHeight"]
+        self.imgOffsetX = json_data["imgOffsetX"]
+        self.imgOffsetY = json_data["imgOffsetY"]
+        self.points = []
+        coordinates = json_data["coordinates"]
+        for c in coordinates:
+            self.points.append(list(c.values()))
+        self.points = np.array(self.points,dtype=float)
+                
+
+    def clusterData(self,classes):
+        return kmeans(self.points,classes)
+
+    
+
+
+
+
 @app.route('/api/<imageid>', methods=['GET', 'POST'])
-def post_data(imageid):
+def postData(imageid):
     if request.method == 'POST':
         content = request.get_json()
-        with open('received_data.json', 'w') as outfile:
-            json.dump(content, outfile)
-        print("Data Received!")
-        return "Data Received!"
+        
+        x = Image(content)
+        print(x.clusterData(2))
+        
 
+        print("Data Received!")
+        return("Done!")
+        
+        
 
 if __name__ == '__main__':
     app.run(host= '0.0.0.0',debug=True)
