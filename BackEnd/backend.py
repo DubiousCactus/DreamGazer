@@ -137,7 +137,7 @@ def postData(imageid):
         return("ERROR: No coordinates !")
     
     window_size = 200
-    number_of_classes = 4
+    number_of_classes = 6
 
     x = Image(content, imageid)
     x.datafile = cv2.imread("images/image{}.jpg".format(imageid))
@@ -147,8 +147,8 @@ def postData(imageid):
 
 
     global patches
-    #patches = x.extract(means,window_size)  
-    patches += x.extract([[400, 400], [256, 199], [534, 312], [135, 345], [608, 400], [702, 540]], window_size)
+    patches += x.extract(means, window_size)  
+    # patches += x.extract([[400, 400], [256, 199], [534, 312], [135, 345], [608, 400], [702, 540]], window_size)
     
     print("Data Received!")
     return("Done!")
