@@ -6,16 +6,25 @@
  */
   
 window.onload = function() {
-    var photos = [
-	    'https://placehold.it/850x850',
-	    'https://placehold.it/850x850',
-	    'https://placehold.it/850x850',
-	    'https://placehold.it/850x850',
-	    'https://placehold.it/850x850',
-	    'https://placehold.it/850x850',
-	    'https://placehold.it/850x850',
-	    'https://placehold.it/850x850',
-    ];
+  var photos = [
+      'https://placehold.it/850x850',
+      'https://placehold.it/850x850',
+      'https://placehold.it/850x850',
+      'https://placehold.it/850x850',
+      'https://placehold.it/850x850',
+      'https://placehold.it/850x850',
+      'https://placehold.it/850x850',
+      'https://placehold.it/850x850',
+  ];
+
+  var BACKEND_URL = 'http://localhost:5000';
+  var screen = {};
+  var image = {};
+  var previousClock = null;
+  var i = 0;
+  var read = false;
+  var coords = new Array(photos.length);
+  var interval = 25; //ms
 
    $('#start').click(function(e) {
      $('#header').slideUp("slow", function() {
@@ -25,8 +34,6 @@ window.onload = function() {
      });
    });
 
-  var screen = {};
-  var image = {};
 
   function getScreenInfo() {
     screen.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
@@ -40,37 +47,31 @@ window.onload = function() {
     image.height = $('.gaze').height();
   }
 
-  var previousClock = null;
-  var i = 0;
-  var read = false;
-  var coords = new Array(photos.length);
-  var interval = 25; //ms
-
-    function setListener() {
-	webgazer.setRegression('ridge') /* currently must set regression and tracker */
-	  .setTracker('clmtrackr')
-	  .setGazeListener(function(data, clock) {
-	    if (read && (previousClock == null || (clock - previousClock) >= interval)) {
-	      if (typeof coords[i] == 'undefined') {
-	      	coords[i] = [];
-	      	console.log(coords);
-	      }
-
-	      coords[i].push(data);
+  function setListener() {
+      webgazer.setRegression('ridge') /* currently must set regression and tracker */
+	.setTracker('clmtrackr')
+	.setGazeListener(function(data, clock) {
+	  if (read && (previousClock == null || (clock - previousClock) >= interval)) {
+	    if (typeof coords[i] == 'undefined') {
+	      coords[i] = [];
+	      console.log(coords);
 	    }
-	  })
-	  .begin()
-	  .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
-    }
+
+	    coords[i].push(data);
+	  }
+	})
+	.begin()
+	.showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
+  }
 
 
-    function slideShow() {
-	$('.gaze').attr('src', photos[i]).fadeIn('slow')
-	getScreenInfo();
-	getImageInfo();
-	read = true;
-	window.setInterval(changeImage, 10000);
-    }
+  function slideShow() {
+      $('.gaze').attr('src', photos[i]).fadeIn('slow')
+      getScreenInfo();
+      getImageInfo();
+      read = true;
+      window.setInterval(changeImage, 10000);
+  }
 
   function sendData() {
     var json = {
@@ -85,28 +86,30 @@ window.onload = function() {
 
     console.log(json);
 
-    $.post('http://localhost:5000/api/' + i, json, function(data) {
+    $.post(BACKEND_URL + '/api/' + i, json, function(data) {
       console.log(data);
     });
 
   }
 
   function submit() {
-    console.log(coords);
+    $.get(BACKEND_URL + '/api/mozaique', function(data) {
+      console.log(data);
+    });
   }
 
-    function changeImage() {
-	if (i >= photos.length) {
-	  submit();
-	  return;
-	}
+  function changeImage() {
+      if (i >= photos.length) {
+	submit();
+	return;
+      }
 
-	read = false;
-	sendData();
-	$('.gaze').fadeOut('slow');
-	$('.gaze').attr('src', photos[i++]).fadeIn('slow')
-	read = true;
-    }
+      read = false;
+      sendData();
+      $('.gaze').fadeOut('slow');
+      $('.gaze').attr('src', photos[i++]).fadeIn('slow')
+      read = true;
+  }
   
-    setTimeout(setListener, 300);
+  setTimeout(setListener, 300);
 };
