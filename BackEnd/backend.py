@@ -3,6 +3,8 @@
 import json 
 import numpy as np
 import cv2
+import math
+import matplotlib.pyplot as plt
 
 from flask_cors import CORS
 from scipy.cluster.vq import kmeans
@@ -54,30 +56,43 @@ class Image:
             cv2.destroyAllWindows()
 
         return extracted_patches
-            
+
+
 
     def assemble(self, patches):
         """Assemble Feature Collage"""
         mozaiques = []
         for i in range(5):
-            patches.shuffle()
-            mozaique = np.array(5, 5, 3)
-            nb_rows = int(Math.sqrt(patches))
-            nb_cols = len(patches) / nb_rows
-            m = nb_cols
-            n = nb_rows
+            # patches = np.random.shuffle(patches)
+            nb_patches_per_rows = int(math.sqrt(len(patches)))
+            nb_patches_per_cols = len(patches) / nb_patches_per_rows
+            mozaique = np.zeros([patches[0].shape[0] * nb_patches_per_rows, patches[0].shape[1] * nb_patches_per_cols, 3], dtype=int)
+            m = n = 0
 
             for patch in patches:
-                mozaique[n,m] = patch
-                m -= 1
-                if m == 0:
-                    m = nb_cols
-                    n -= 1
+                # mozaique[n:patch.shape[0],m:patch.shape[1],:] = patch
+                l = 0
+                for j in range(n, patch.shape[0]):
+                    p = 0
+                    for k in range(m, patch.shape[1]):
+                        # print("j={} k={} l={} p={}".format(j,k,l,p))
+                        mozaique[j, k, :] = patch[l, p, :]
+                        # print(mozaique)
+                        p += 1
+                    l += 1
 
+                m += 1
+                if m == nb_patches_per_cols:
+                    m = 0
+                    n += 1
+
+            print(mozaique)
+            print(mozaique.shape)
             cv2.imshow('Mozaique', mozaique)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
-
+            plt.imshow(mozaique)
+            plt.show()
             mozaiques.append(mozaique)
         
         return mozaiques
@@ -97,9 +112,10 @@ def postData(imageid):
     #cv2.imshow('Patch',x.datafile)
     #cv2.waitKey(0)
     #cv2.destroyAllWindows()
-    means = x.clusterData(2)
+    means = x.clusterData(3)
 
-    x.extract(means,300)  
+    patches = x.extract([[400,400], [256, 199], [534, 312]], 100)
+    x.assemble(patches)
             
     
     print("Data Received!")
