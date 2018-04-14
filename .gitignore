@@ -1,1 +1,4 @@
 BackEnd/flask/
+FaceNetAEModel/model.*
+FaceNetAEModel/attribute_vectors.h5
+facenet/
