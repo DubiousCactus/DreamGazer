@@ -44,8 +44,9 @@ class Image:
     def clusterData(self, classes):
         """Get the cluster mean points"""
         #self.points = 
-        #means,ops = kmeans(self.points,classes)
-        means = np.asarray([[0, 0], [1400, 200], [0, 0], [0, 0], [0, 0]], dtype=int)
+        means,ops = kmeans(self.points,classes)
+        means = np.asarray(means,dtype=int)
+
         # Subtract Offset to image coordinate system
         means[:,0] = means[:,0] - self.imgOffsetX 
         means[:,1] = means[:,1] - self.imgOffsetY
@@ -159,8 +160,8 @@ def getData():
     urls =[]
 
     for i, mosaic in enumerate(mosaics):
-        cv2.imwrite("output/mosaic{}.jpg".format(i), mosaic)
-        urls.append("output/mosaic{}.jpg".format(i))
+        cv2.imwrite("/output/mosaic{}.jpg".format(i), mosaic)
+        urls.append("/output/mosaic{}.jpg".format(i))
 
     return jsonify(urls)
  

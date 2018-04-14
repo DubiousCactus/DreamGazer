@@ -111,7 +111,7 @@ window.onload = function () {
                 if (data == null) {
                     return;
                 }
-                if (read && (previousClock == null || (clock - previousClock) >= interval)) {
+                //if (read && (previousClock == null || (clock - previousClock) >= interval)) {
                     if (typeof coords[i] == 'undefined') {
                         coords[i] = [];
                     }
@@ -120,7 +120,7 @@ window.onload = function () {
                         'x': data.x,
                         'y': data.y
                     });
-                }
+                //}
             })
             .begin()
             .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
