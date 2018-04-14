@@ -10375,7 +10375,6 @@ var mosseFilterResponses = function() {
 }());
 
 (function(window, undefined) {
-    console.log('initializing webgazer');
     //strict mode for type safety
     'use strict';
 
