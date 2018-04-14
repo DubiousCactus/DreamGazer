@@ -58,7 +58,7 @@ class Image:
         """Assemble Feature Collage"""
         mosaics = []
         for i in range(5):
-            # np.random.shuffle(patches)
+            np.random.shuffle(patches)
             nb_patches_per_rows = int(math.sqrt(len(patches)))
             nb_patches_per_cols = int(len(patches) / nb_patches_per_rows)
             mosaic = np.zeros([patches[0].shape[0] * nb_patches_per_rows, patches[0].shape[1] * nb_patches_per_cols, 3], dtype='uint8')
@@ -102,7 +102,7 @@ def postData(imageid):
     #cv2.destroyAllWindows()
     means = x.clusterData(3)
 
-    patches = x.extract([[400,400], [256, 199], [534, 312], [135, 345], [608, 400], [702, 540]], 100)
+    patches = x.extract([[400, 400], [256, 199], [534, 312], [135, 345], [608, 400], [702, 540]], 100)
     x.assemble(patches)
             
     
