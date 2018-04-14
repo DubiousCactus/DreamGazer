@@ -2,9 +2,13 @@
 # -*- coding: utf-8 -*-
 import json 
 import numpy as np
+
+from flask_cors import CORS
 from scipy.cluster.vq import kmeans
 from flask import Flask, request, jsonify
+
 app = Flask(__name__)
+CORS(app)
 
 class Image:
 

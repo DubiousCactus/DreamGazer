@@ -36,6 +36,8 @@ window.onload = function() {
   function getImageInfo() {
     image.offsetX = $('.gaze').offset().left;
     image.offsetY = $('.gaze').offset().top;
+    image.width = $('.gaze').width();
+    image.height = $('.gaze').height();
   }
 
   var previousClock = null;
@@ -71,7 +73,22 @@ window.onload = function() {
     }
 
   function sendData() {
-    console.log(coords[i]);
+    var json = {
+      "screenWidth": screen.width,
+      "screenHeight": screen.height,
+      "imgWidth": image.width,
+      "imgHeight": image.height,
+      "imgOffsetX": image.offsetX,
+      "imgOffsetY": image.offsetY,
+      "coordinates": coords[i]
+    };
+
+    console.log(json);
+
+    $.post('http://localhost:5000/api/' + i, json, function(data) {
+      console.log(data);
+    });
+
   }
 
   function submit() {
