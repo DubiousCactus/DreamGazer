@@ -6,8 +6,8 @@
  */
 
 body {
-	background: white;
-	color: black;
+    background: white;
+    color: black;
 }
 
 #start_calibration #start_show {
@@ -16,24 +16,24 @@ body {
 }
 
 .gaze {
-	display: none;
+    display: none;
 }
 
 .calibration {
-    display:none;
+    display: none;
 }
 
 #placeholder {
-	text-align: center;
-	font-size: 52px;
-	font-family: 'Kalam';
-	font-weight: bold;
-	margin-top: 130px;
-	margin-bottom: 330px;
+    text-align: center;
+    font-size: 52px;
+    font-family: 'Kalam';
+    font-weight: bold;
+    margin-top: 130px;
+    margin-bottom: 330px;
 }
 
 /*Calibratin style*/
-.Calibration{
+.Calibration {
     width: 20px;
     height: 20px;
     -webkit-border-radius: 25px;
@@ -47,15 +47,15 @@ body {
 }
 
 /*Calibration points position*/
-#Pt1{
+#Pt1 {
     top: 70px;
     left: 340px;
 }
 
-#Pt2{
-    top:70px;
-    left:50vw;
-    margin-left:340;
+#Pt2 {
+    top: 70px;
+    left: 50vw;
+    margin-left: 340;
 }
 
 #Pt3 {
@@ -98,3 +98,49 @@ body {
     height: 117px;
 }
 
+/* Navbar styling */
+#webgazerNavbar {
+    left: 320px;
+    z-index: 0;
+    box-shadow: 0px 3px 5px #ddd;
+    border: 0px;
+    background-color: #fff;
+}
+
+#Accuracy a {
+    background-color: #222;
+    color: #eee;
+    left: -15px;
+    padding-left: 80px;
+    padding-right: 40px;
+}
+
+#Accuracy {
+    background-color: #222;
+    padding-left: inherit;
+}
+
+li {
+    padding-left: 50px;
+}
+
+.navbar-right li {
+    padding-right: 20px;
+}
+
+.helpBtn {
+    padding: 15px;
+    border: none;
+    background: none;
+    color: #777;
+}
+
+    .helpBtn a {
+        background: none;
+        color: #777;
+    }
+
+        .helpBtn a:hover {
+            color: black !important;
+            text-decoration: none;
+        }
