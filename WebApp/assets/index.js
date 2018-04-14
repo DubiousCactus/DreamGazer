@@ -54,10 +54,12 @@ window.onload = function() {
 	  if (read && (previousClock == null || (clock - previousClock) >= interval)) {
 	    if (typeof coords[i] == 'undefined') {
 	      coords[i] = [];
-	      console.log(coords);
 	    }
 
-	    coords[i].push(data);
+	    coords[i].push({
+	      'x': data.x,
+	      'y': data.y
+	    });
 	  }
 	})
 	.begin()
@@ -86,8 +88,14 @@ window.onload = function() {
 
     console.log(json);
 
-    $.post(BACKEND_URL + '/api/' + i, json, function(data) {
-      console.log(data);
+    $.ajax({
+      type: 'POST',
+      url: BACKEND_URL + '/api/' + i,
+      contentType: 'application/json',
+      data: JSON.stringify(json),
+      success: function(data) {
+	console.log(data);
+      }
     });
 
   }
