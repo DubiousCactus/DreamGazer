@@ -7,11 +7,16 @@
 // Global var.
 var BACKEND_URL = 'http://localhost:5000';
 var photos = [
-    BACKEND_URL + '/images/johnny850x850.jpg',
-    BACKEND_URL + '/images/clint850x850.jpg',
-    BACKEND_URL + '/images/clooney850x850.jpg',
-    BACKEND_URL + '/images/martin2850x850.jpg',
-    BACKEND_URL + '/images/martin850x850.jpg',
+    BACKEND_URL + '/images/image1.jpg',
+    BACKEND_URL + '/images/image2.jpg',
+    BACKEND_URL + '/images/image3.jpg',
+    BACKEND_URL + '/images/image4.jpg',
+    BACKEND_URL + '/images/image5.jpg',
+    BACKEND_URL + '/images/image6.jpg',
+    BACKEND_URL + '/images/image7.jpg',
+    BACKEND_URL + '/images/image8.jpg',
+    BACKEND_URL + '/images/image9.jpg',
+    BACKEND_URL + '/images/image10.jpg',
 ];
 var screen = {};
 var image = {};
