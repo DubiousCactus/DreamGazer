@@ -6,18 +6,14 @@
  */
   
 window.onload = function() {
-  var photos = [
-      'https://placehold.it/850x850',
-      'https://placehold.it/850x850',
-      'https://placehold.it/850x850',
-      'https://placehold.it/850x850',
-      'https://placehold.it/850x850',
-      'https://placehold.it/850x850',
-      'https://placehold.it/850x850',
-      'https://placehold.it/850x850',
-  ];
-
   var BACKEND_URL = 'http://localhost:5000';
+  var photos = [
+      BACKEND_URL + '/images/johnny850x850.jpg',
+      BACKEND_URL + '/images/clint850x850.jpg',
+      BACKEND_URL + '/images/clooney850x850.jpg',
+      BACKEND_URL + '/images/martin2850x850.jpg',
+      BACKEND_URL + '/images/martin850x850.jpg',
+  ];
   var screen = {};
   var image = {};
   var previousClock = null;

@@ -5,9 +5,10 @@ import numpy as np
 
 from flask_cors import CORS
 from scipy.cluster.vq import kmeans
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 
-app = Flask(__name__)
+# set the project root directory as the static folder, you can set others.
+app = Flask(__name__, static_url_path='')
 CORS(app)
 
 class Image:
@@ -44,19 +45,27 @@ class Image:
         return 1
 
 
-@app.route('/api/<imageid>', methods=['GET', 'POST'])
+@app.route('/api/<imageid>', methods=['POST'])
 def postData(imageid):
-    if request.method == 'POST':
-        content = request.get_json()
+    content = request.get_json()
+    
+    x = Image(content,imageid)
+    print(x.clusterData(2))
+            
+    
+    print("Data Received!")
+    return("Done!")
+
+
+@app.route('/api/mozaique', methods=['GET'])
+def getData():
+    return("Not ready")
         
-        x = Image(content,imageid)
-        print(x.clusterData(2))
-                
         
-        print("Data Received!")
-        return("Done!")
-        
-        
+@app.route('/images/<path:path>')
+def send_img(path):
+    return send_from_directory('images', path)
+
 
 if __name__ == '__main__':
     app.run(host= '0.0.0.0',debug=True)
