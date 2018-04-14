@@ -3,6 +3,7 @@
 import json 
 import numpy as np
 import cv2
+
 from flask_cors import CORS
 from scipy.cluster.vq import kmeans
 from flask import Flask, request, jsonify, send_from_directory
@@ -24,8 +25,10 @@ class Image:
         self.imgOffsetY = json_data["imgOffsetY"]
         self.points = []
         coordinates = json_data["coordinates"]
+
         for c in coordinates:
             self.points.append(list(c.values()))
+
         self.points = np.array(self.points,dtype=float)
                 
 
@@ -60,9 +63,32 @@ class Image:
         return extracted_patches
             
 
-    def assemble(self):
+    def assemble(self, patches):
         """Assemble Feature Collage"""
-        return 1
+        mozaiques = []
+        for i in range(5):
+            patches.shuffle()
+            mozaique = np.array(5, 5, 3)
+            nb_rows = int(Math.sqrt(patches))
+            nb_cols = len(patches) / nb_rows
+            m = nb_cols
+            n = nb_rows
+
+            for patch in patches:
+                mozaique[n,m] = patch
+                m -= 1
+                if m == 0:
+                    m = nb_cols
+                    n -= 1
+
+            cv2.imshow('Mozaique', mozaique)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
+
+            mozaiques.append(mozaique)
+        
+        return mozaiques
+
 
     def dream(self):
         """Dream"""
