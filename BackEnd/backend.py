@@ -3,9 +3,12 @@
 import json 
 import numpy as np
 import cv2
+from flask_cors import CORS
 from scipy.cluster.vq import kmeans
 from flask import Flask, request, jsonify
+
 app = Flask(__name__)
+CORS(app)
 
 class Image:
     datafile = []
