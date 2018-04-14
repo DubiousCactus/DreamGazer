@@ -25,15 +25,24 @@ window.onload = function() {
      });
    });
 
-    var gazing = false;
-    var i = 0;
+  var previousClock = null;
+  var i = 0;
+  var read = false;
+  var coords = new Array(photos.length);
+  var interval = 50; //ms
 
     function setListener() {
 	webgazer.setRegression('ridge') /* currently must set regression and tracker */
 	  .setTracker('clmtrackr')
 	  .setGazeListener(function(data, clock) {
-	       //console.log(data); [> data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) <]
-	       //console.log(clock); [> elapsed time in milliseconds since webgazer.begin() was called <]
+	    if (read && (previousClock == null || (clock - previousClock) >= interval)) {
+	      if (typeof coords[i] == 'undefined') {
+	      	coords[i] = [];
+	      	console.log(coords);
+	      }
+
+	      coords[i].push(data);
+	    }
 	  })
 	  .begin()
 	  .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
@@ -41,13 +50,30 @@ window.onload = function() {
 
 
     function slideShow() {
-	changeImage();
+	$('.gaze').attr('src', photos[i]).fadeIn('slow')
+	read = true;
 	window.setInterval(changeImage, 10000);
     }
 
+  function sendData() {
+    console.log(coords[i]);
+  }
+
+  function submit() {
+    console.log(coords);
+  }
+
     function changeImage() {
+	if (i >= photos.length) {
+	  submit();
+	  return;
+	}
+
+	read = false;
+	sendData();
 	$('.gaze').fadeOut('slow');
 	$('.gaze').attr('src', photos[i++]).fadeIn('slow')
+	read = true;
     }
   
     setTimeout(setListener, 300);
