@@ -28,15 +28,24 @@ function PopUpInstruction() {
 
 }
 
+function slideShow() {
+    $('.gaze').attr('src', photos[i]).fadeIn('slow')
+    getScreenInfo();
+    getImageInfo();
+    read = true;
+    window.setInterval(changeImage, 10000);
+}
+
 /**
  * Load this function when the index page starts.
 * This function listens for button clicks on the html page
 * checks that all buttons have been clicked 5 times each, and then goes on to measuring the precision
 */
 $(document).ready(function () {
+    console.log("Calibrating");
     ClearCanvas();
      $(".Calibration").click(function(){ // click event on the calibration buttons
-
+         console.log("Clicked a Calibration Point");
       var id = $(this).attr('id');
 
       if (!CalibrationPoints[id]){ // initialises if not done
@@ -60,12 +69,20 @@ $(document).ready(function () {
       }
 
       if (PointCalibrate >= 9){ // last point is calibrated
-        var accuracyLabel = "<a>Calibrated!</a>";
-       document.getElementById("Accuracy").innerHTML = accuracyLabel; 
-       webgazer.end();
-       
+      var accuracyLabel = "<a>Calibrated!</a>";
+      document.getElementById("Accuracy").innerHTML = accuracyLabel;
+      document.getElementById("")
+      // webgazer.end();
 
-        window.location.href='/taskinstructions.html'
+
+       $('#header').slideUp("slow", function () {
+           //$('#placeholder').fadeIn('fast');
+           $('#show').fadeIn('fast');
+           $('.gaze').slideDown("slow");
+           $('.calibration').fadeOut("fast");
+           setTimeout(slideShow, 2000);
+
+       });
       }
 
        if (PointCalibrate >= 9){ // last point is calibrated
@@ -126,7 +143,8 @@ $(document).ready(function () {
  * Show the Calibration Points
  */
 function ShowCalibrationPoint() {
-    $(".Calibration").show();
+    console.log("ShowCalibrationPoint");
+    $(".Calibration").show(); 
     $("#Pt5").hide(); // initially hides the middle button
 }
 
