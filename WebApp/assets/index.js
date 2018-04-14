@@ -22,15 +22,25 @@ window.onload = function() {
   var coords = new Array(photos.length);
   var interval = 25; //ms
 
-   $('#start').click(function(e) {
-     $('#header').slideUp("slow", function() {
-	 $('#placeholder').fadeOut('fast');
-	 $('.gaze').slideDown("slow");
-	setTimeout(slideShow, 3000);
-     });
+  $('#start_calibration').click(function (e) {
+      $('#header').slideUp("slow", function () {
+          //$('#placeholder').fadeOut('fast');
+          $('#show').fadeOut('fast');
+          $('.calibration').slideDown("slow");
+          setTimeout(slideShow, 3000);
+      });
+      window.open("calibrationinstructions.html", "", "width=450,height=450");
+  });
+
+  $('#start_show').click(function (e) {
+       $('#header').slideUp("slow", function () {
+           //$('#placeholder').fadeIn('fast');
+           $('#show').fadeIn('fast');
+           $('.gaze').slideDown("slow");
+           setTimeout(slideShow, 3000);
+       });
    });
-
-
+    
   function getScreenInfo() {
     screen.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     screen.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
