@@ -28,6 +28,14 @@ function PopUpInstruction() {
 
 }
 
+function slideShow() {
+    $('.gaze').attr('src', photos[i]).fadeIn('slow')
+    getScreenInfo();
+    getImageInfo();
+    read = true;
+    window.setInterval(changeImage, 10000);
+}
+
 /**
  * Load this function when the index page starts.
 * This function listens for button clicks on the html page
@@ -64,10 +72,17 @@ $(document).ready(function () {
       var accuracyLabel = "<a>Calibrated!</a>";
       document.getElementById("Accuracy").innerHTML = accuracyLabel;
       document.getElementById("")
-       webgazer.end();
-       
+      // webgazer.end();
 
-        window.location.href='/taskinstructions.html'
+
+       $('#header').slideUp("slow", function () {
+           //$('#placeholder').fadeIn('fast');
+           $('#show').fadeIn('fast');
+           $('.gaze').slideDown("slow");
+           $('.calibration').fadeOut("fast");
+           setTimeout(slideShow, 2000);
+
+       });
       }
 
        if (PointCalibrate >= 9){ // last point is calibrated

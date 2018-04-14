@@ -38,17 +38,7 @@ window.onload = function () {
         script.src = "assets/webgazer.js.";
         document.getElementsByTagName("head")[0].appendChild(script);
 
-        StartCalibration();  // CNC added
-        window.open("calibrationinstructions.html", "", "width=450,height=450");
-    });
-
-    $('#start_show').click(function (e) {
-        $('#header').slideUp("slow", function () {
-            //$('#placeholder').fadeIn('fast');
-            $('#show').fadeIn('fast');
-            $('.gaze').slideDown("slow");
-            setTimeout(slideShow, 3000);
-        });
+        StartCalibration();
     });
 
     function getScreenInfo() {
