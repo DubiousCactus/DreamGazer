@@ -4,6 +4,8 @@ import json
 import numpy as np
 import cv2
 import math
+import shutil
+import os
 
 from flask_cors import CORS
 from scipy.cluster.vq import kmeans
@@ -158,15 +160,27 @@ def getData():
         urls.append("output/mosaic" + str(i) + ".jpg")
 
     return jsonify(urls)
-        
+ 
+
 @app.route('/output/<path:path>')
 def send_mosaic(path):
     return send_from_directory('output',path)
+
 
 @app.route('/images/<path:path>')
 def send_img(path):
     return send_from_directory('images', path)
 
+
+@app.route('/api/purge', methods=['POST'])
+def purge():
+    global patches
+    patches = []
+
+    if os.path.isdir('output'):
+        shutil.rmtree('output/')
+
+    return("OK")
 
 if __name__ == '__main__':
     app.run(host= '0.0.0.0',debug=True)
