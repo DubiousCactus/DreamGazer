@@ -25,11 +25,24 @@ window.onload = function() {
      });
    });
 
+  var screen = {};
+  var image = {};
+
+  function getScreenInfo() {
+    screen.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    screen.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  }
+
+  function getImageInfo() {
+    image.offsetX = $('.gaze').offset().left;
+    image.offsetY = $('.gaze').offset().top;
+  }
+
   var previousClock = null;
   var i = 0;
   var read = false;
   var coords = new Array(photos.length);
-  var interval = 50; //ms
+  var interval = 25; //ms
 
     function setListener() {
 	webgazer.setRegression('ridge') /* currently must set regression and tracker */
@@ -51,6 +64,8 @@ window.onload = function() {
 
     function slideShow() {
 	$('.gaze').attr('src', photos[i]).fadeIn('slow')
+	getScreenInfo();
+	getImageInfo();
 	read = true;
 	window.setInterval(changeImage, 10000);
     }
