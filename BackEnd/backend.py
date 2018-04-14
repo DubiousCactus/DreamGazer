@@ -35,7 +35,38 @@ class Image:
 
     def clusterData(self,classes):
         """Get the cluster mean points"""
-        means = kmeans(self.points,classes)
+        #self.points = 
+        #means,ops = kmeans(self.points,classes)
+        means = np.asarray([[0,0],[1400,200],[0,0],[0,0],[0,0]],dtype=int)
+        # Subtract Offset to image coordinate system
+        means[:,0] = means[:,0] - self.imgOffsetX 
+        means[:,1] = means[:,1] - self.imgOffsetY
+
+        return means.tolist()
+
+    def checkMeans(self,means,window_size):
+        """Check if the mean values will produce proper patches"""
+        # Remove Outliers
+        means2 = []
+        for mean in means:
+            x = mean[0]
+            y = mean[1]
+            if not ((x < 0 or x > self.imgWidth) or (y < 0 or y > self.imgHeight)):
+                means2.append(mean)
+        means = means2[:]
+
+        # Correct when too near to the border
+        for i in range(0,len(means)):
+            if  means[i][0]  < window_size/2:
+                means[i][0] =  window_size/2
+            if  means[i][0] > (self.imgWidth - window_size/2): 
+                means[i][0] = self.imgWidth - window_size/2
+    
+            if  means[i][1] <  window_size/2:
+                means[i][1] = window_size/2
+            if  means[i][1] > (self.imgHeight - window_size/2): 
+                means[i][1] = self.imgHeight - window_size/2
+        #print(means)
         return means
     
 
@@ -95,14 +126,19 @@ class Image:
 def postData(imageid):
     content = request.get_json()
     
+    window_size = 200
+    number_of_classes = 4
+
     x = Image(content,imageid)
     x.datafile = cv2.imread("images/martin2850x850.jpg")
     #cv2.imshow('Patch',x.datafile)
     #cv2.waitKey(0)
     #cv2.destroyAllWindows()
-    means = x.clusterData(3)
-
+    means = x.clusterData(number_of_classes)
+    means = x.checkMeans(means,window_size)
+    #patches = x.extract(means,window_size)  
     patches = x.extract([[400, 400], [256, 199], [534, 312], [135, 345], [608, 400], [702, 540]], 100)
+    
     x.assemble(patches)
             
     
