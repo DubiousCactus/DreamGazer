@@ -10488,6 +10488,54 @@ var mosseFilterResponses = function() {
     * Checks if the pupils are in the position box on the video
     */
     function checkEyesInValidationBox() {
+        var eyesObjs = curTracker.getEyePatches(videoElementCanvas,
+            webgazer.params.imgWidth, webgazer.params.imgHeight);
+        
+        var validationBox = document.getElementById('faceOverlay');
+        if (validationBox == null || !eyesObjs) {
+            return;
+        }
+
+        // get the boundaries of the face overlay validation box
+        leftBound = 107;
+        topBound = 59;
+        rightBound = leftBound + 117;
+        bottomBound = topBound + 117;
+
+        // get the x and y positions of the left and right eyes
+        var eyeLX = eyesObjs.left.imagex;
+        var eyeLY = eyesObjs.left.imagey;
+        var eyeRX = eyesObjs.right.imagex;
+        var eyeRY = eyesObjs.right.imagey;
+
+        var xPositions = false;
+        var yPositions = false;
+        // check if the x values for the left and right eye are within the
+        // validation box
+        if (eyeLX > leftBound && eyeLX < rightBound) {
+            if (eyeRX > leftBound && eyeRX < rightBound) {
+                xPositions = true;
+            }
+        }
+
+        // check if the y values for the left and right eye are within the
+        // validation box
+        if (eyeLY > topBound && eyeLY < bottomBound) {
+            if (eyeRY > topBound && eyeRY < bottomBound) {
+                yPositions = true;
+            }
+        }
+
+        // if the x and y values for both the left and right eye are within
+        // the validation box then the box border turns green, otherwise
+        // the box the colour is red
+        if (xPositions && yPositions) {
+            validationBox.style.border = 'solid green';
+        } else {
+            validationBox.style.border = 'solid red';
+        }
+    }
+/*function checkEyesInValidationBox() {
         var eyesObjs = curTracker.getEyePatches(videoElementCanvas,webgazer.params.imgWidth,webgazer.params.imgHeight);
 
         var validationBox = document.getElementById('faceOverlay');
@@ -10533,7 +10581,7 @@ var mosseFilterResponses = function() {
                 validationBox.style.border = 'solid red';
             }
         }
-    }
+    }*/
 
 
     /**

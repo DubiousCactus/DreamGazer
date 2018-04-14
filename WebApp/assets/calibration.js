@@ -133,8 +133,8 @@ $(document).ready(function(){
  * Show the Calibration Points
  */
 function ShowCalibrationPoint() {
-  $(".Calibration").show();
-  $("#Pt5").hide(); // initially hides the middle button
+    $(".Calibration").show();
+    $("#Pt5").hide(); // initially hides the middle button
 }
 
 /**
