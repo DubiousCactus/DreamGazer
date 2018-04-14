@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import json 
 import numpy as np
-
+import cv2
 from flask_cors import CORS
 from scipy.cluster.vq import kmeans
 from flask import Flask, request, jsonify, send_from_directory
@@ -12,6 +12,7 @@ app = Flask(__name__, static_url_path='')
 CORS(app)
 
 class Image:
+    datafile = []
 
     def __init__(self,json_data,imageid):
         self.imageid = imageid
@@ -27,13 +28,31 @@ class Image:
             self.points.append(list(c.values()))
         self.points = np.array(self.points,dtype=float)
                 
+
     def clusterData(self,classes):
-        """Cluster Gaze Points"""
+        """Get the cluster mean points"""
         means = kmeans(self.points,classes)
         return means
     
-    def extract(self):
-        """Extract Small Image Feature"""
+
+    def extract(self,means,window_size):
+        """Extract small patches around"""
+        
+        for mean in means:
+            x = np.asarray(mean[0] - (window_size-1)/2,dtype=int)
+            y = np.asarray(mean[1] - (window_size-1)/2,dtype=int)
+            n = 0
+            m = 0
+            extract = np.empty([window_size+1,window_size+1,3])
+            print(self.datafile)
+            for i in range(x,x+window_size-1):
+                for j in range(y,y+window_size-1):
+                    extract[n,m,:] = self.datafile[i,j,:]
+                    m = m + 1
+                n = n +1
+            return extract
+            
+
         return 1
 
     def assemble(self):
@@ -50,6 +69,10 @@ def postData(imageid):
     content = request.get_json()
     
     x = Image(content,imageid)
+    x.datafile = cv2.imread("resources/image" + str(imageid) + ".png")
+    print(x.datafile.shape)
+    means = x.clusterData(2)
+    x.extract(means[0],49)    
     print(x.clusterData(2))
             
     
@@ -61,7 +84,7 @@ def postData(imageid):
 def getData():
     return("Not ready")
         
-        
+
 @app.route('/images/<path:path>')
 def send_img(path):
     return send_from_directory('images', path)
