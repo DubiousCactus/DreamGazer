@@ -21,7 +21,7 @@ window.onload = function() {
      $('#header').slideUp("slow", function() {
 	 $('#placeholder').fadeOut('fast');
 	 $('.gaze').slideDown("slow");
-	setInterval(slideShow, 3000);
+	setTimeout(slideShow, 3000);
      });
    });
 
