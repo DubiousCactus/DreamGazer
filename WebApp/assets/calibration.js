@@ -69,7 +69,7 @@ $(document).ready(function () {
            $('#show').fadeIn('fast');
            $('.gaze').slideDown("slow");
            $('.calibration').fadeOut("fast");
-           setTimeout(slideShow, 2000);
+           setTimeout(slideShow, 5000);
        });
       }
 
