@@ -66,7 +66,7 @@ function slideShow() {
     getScreenInfo();
     getImageInfo();
     read = true;
-    window.setInterval(changeImage, 10000);
+    window.setInterval(changeImage, 2000);
 }
 
 function sendData() {
@@ -89,6 +89,8 @@ function sendData() {
         data: JSON.stringify(json),
         success: function (data) {
             console.log(data);
+            coords[i] = null;
+            json = null;
         }
     });
 

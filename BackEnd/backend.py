@@ -96,6 +96,9 @@ class Image:
 
 def assemble(patches):
     """Assemble Feature Collage"""
+    if len(patches) < 2:
+        return False
+
     mosaics = []
     for i in range(5):
         np.random.shuffle(patches)
@@ -109,6 +112,7 @@ def assemble(patches):
             for j in range(n * patch.shape[0], n * patch.shape[0] + patch.shape[0]):
                 p = 0
                 for k in range(m * patch.shape[1], m * patch.shape[1] + patch.shape[1]):
+                    # print("n={} m={} j={} k={} l={} p={}".format(n,m,j,k,l,p))
                     mosaic[j, k, :] = patch[l, p, :]
                     p += 1
                 l += 1
@@ -142,13 +146,13 @@ def postData(imageid):
     x = Image(content, imageid)
     x.datafile = cv2.imread("images/image{}.jpg".format(imageid))
 
-    means = x.clusterData(number_of_classes)
-    means = x.checkMeans(means, window_size)
+    # means = x.clusterData(number_of_classes)
+    # means = x.checkMeans(means, window_size)
 
 
     global patches
-    patches += x.extract(means, window_size)  
-    # patches += x.extract([[400, 400], [256, 199], [534, 312], [135, 345], [608, 400], [702, 540]], window_size)
+    # patches += x.extract(means, window_size)  
+    patches += x.extract([[400, 400], [256, 399], [534, 312], [235, 345], [508, 400], [402, 540]], window_size)
     
     print("Data Received!")
     return("Done!")
@@ -157,6 +161,8 @@ def postData(imageid):
 @app.route('/api/mosaic', methods=['GET'])
 def getData():
     mosaics = assemble(patches)
+    if mosaics == False: return("ERROR: No patches !")
+
     urls =[]
 
     for i, mosaic in enumerate(mosaics):
