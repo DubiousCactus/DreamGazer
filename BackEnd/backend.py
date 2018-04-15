@@ -203,8 +203,9 @@ def purge():
 
     if os.path.isdir('output'):
         shutil.rmtree('output/')
-        os.mkdir('output');
-
+    
+    os.mkdir('output');
+    
     return("OK")
 
 if __name__ == '__main__':
