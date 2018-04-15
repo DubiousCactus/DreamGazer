@@ -177,7 +177,7 @@ def getData():
     urls =[]
 
     for i, mosaic in enumerate(mosaics):
-        cv2.imwrite("/output/mosaic{}.jpg".format(i), mosaic)
+        cv2.imwrite("output/mosaic{}.jpg".format(i), mosaic)
         urls.append("/output/mosaic{}.jpg".format(i))
 
     return jsonify(urls)
