@@ -95,6 +95,12 @@ class Image:
         return extracted_patches
 
 ##########################################
+def factors(n):
+    return set(
+        factor for i in range(1, int(n**0.5) + 1) if n % i == 0
+        for factor in (i, n//i)
+    )
+
 
 def assemble(patches):
     """Assemble Feature Collage"""
@@ -105,20 +111,18 @@ def assemble(patches):
     mosaics = []
     for i in range(5):
         np.random.shuffle(patches)
-        nb_patches_per_rows = int(math.sqrt(len(patches)))
-        nb_patches_per_cols = int(len(patches) / nb_patches_per_rows)
+        nb_patches_per_cols = list(factors(len(patches)))[int(len(factors(len(patches)))/2)]
+        nb_patches_per_rows = int(len(patches) / nb_patches_per_cols)
         mosaic_rows = nb_patches_per_rows * window_size
         mosaic_cols = nb_patches_per_cols * window_size
         mosaic = np.zeros([mosaic_rows, mosaic_cols, 3], dtype='uint8')
         m = n = 0
 
         for patch in patches:
-            print(patch.shape)
             l = 0
             for j in range(n * patch.shape[0], n * patch.shape[0] + patch.shape[0]):
                 p = 0
                 for k in range(m * patch.shape[1], m * patch.shape[1] + patch.shape[1]):
-                    # print("n={} m={} j={} k={} l={} p={}".format(n,m,j,k,l,p))
                     mosaic[j, k, :] = patch[l, p, :]
                     p += 1
                 l += 1
