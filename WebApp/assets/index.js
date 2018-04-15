@@ -135,8 +135,7 @@ window.onload = function () {
                 if (data == null) {
                     return;
                 }
-                //if (read && (cnt % 8 == 0)) {
-                if (read) {
+                if (read && (cnt % 8 == 0)) {
                     if (typeof coords[i] == 'undefined') {
                         coords[i] = [];
                     }
@@ -145,9 +144,8 @@ window.onload = function () {
                         'x': data.x,
                         'y': data.y
                     });
-
-                    cnt++;
                 }
+                cnt++;
             })
             .begin()
             .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
