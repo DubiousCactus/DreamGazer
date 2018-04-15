@@ -20,7 +20,7 @@ CORS(app)
 
 
 global window_size
-window_size = 200
+window_size = 50
 
 ##########################################
 class Image:
@@ -154,7 +154,7 @@ def postData(imageid):
         return("ERROR: No coordinates !")
     
     global window_size
-    number_of_classes = 6
+    number_of_classes = 40
 
     x = Image(content, imageid)
     x.datafile = cv2.imread("images/image{}.jpg".format(imageid))
@@ -183,7 +183,7 @@ def getData():
         cv2.imwrite("output/mosaic{}.jpg".format(i), mosaic)
         urls.append("/output/mosaic{}.jpg".format(i))
 
-    return jsonify(urls)
+    return json.dumps(urls)
  
 
 @app.route('/output/<path:path>')

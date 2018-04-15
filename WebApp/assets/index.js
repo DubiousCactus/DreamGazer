@@ -107,6 +107,7 @@ function submit() {
         console.log(data);
         photos = [];
         i = 0;
+        data = JSON.parse(data);
         data.forEach(function(url) {
             photos.push(BACKEND_URL + url);
         });
@@ -135,7 +136,7 @@ window.onload = function () {
                 if (data == null) {
                     return;
                 }
-                if (read && (cnt % 8 == 0)) {
+                if (read) {
                     if (typeof coords[i] == 'undefined') {
                         coords[i] = [];
                     }
