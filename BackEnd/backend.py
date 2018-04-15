@@ -108,6 +108,7 @@ def assemble(patches):
         m = n = 0
 
         for patch in patches:
+            print(patch.shape)
             l = 0
             for j in range(n * patch.shape[0], n * patch.shape[0] + patch.shape[0]):
                 p = 0
@@ -152,7 +153,8 @@ def postData(imageid):
 
     global patches
     # patches += x.extract(means, window_size)  
-    patches += x.extract([[400, 400], [256, 399], [534, 312], [235, 345], [508, 400], [402, 540]], window_size)
+    mockup_means = x.checkMeans([[400, 400], [256, 399], [534, 312], [235, 345], [508, 400], [402, 540]], window_size)
+    patches += x.extract(mockup_means, window_size)
     
     print("Data Received!")
     return("Done!")
