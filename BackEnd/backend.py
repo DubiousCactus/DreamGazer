@@ -19,6 +19,8 @@ app = Flask(__name__, static_url_path='')
 CORS(app)
 
 
+global window_size
+window_size = 200
 
 ##########################################
 class Image:
@@ -99,12 +101,15 @@ def assemble(patches):
     if len(patches) < 2:
         return False
 
+    global window_size
     mosaics = []
     for i in range(5):
         np.random.shuffle(patches)
         nb_patches_per_rows = int(math.sqrt(len(patches)))
         nb_patches_per_cols = int(len(patches) / nb_patches_per_rows)
-        mosaic = np.zeros([patches[0].shape[0] * nb_patches_per_rows, patches[0].shape[1] * nb_patches_per_cols, 3], dtype='uint8')
+        mosaic_rows = nb_patches_per_rows * window_size
+        mosaic_cols = nb_patches_per_cols * window_size
+        mosaic = np.zeros([mosaic_rows, mosaic_cols, 3], dtype='uint8')
         m = n = 0
 
         for patch in patches:
@@ -141,7 +146,7 @@ def postData(imageid):
     if len(content['coordinates']) == 0:
         return("ERROR: No coordinates !")
     
-    window_size = 200
+    global window_size
     number_of_classes = 6
 
     x = Image(content, imageid)
