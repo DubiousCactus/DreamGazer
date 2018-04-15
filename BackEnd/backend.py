@@ -147,7 +147,10 @@ def dream(self):
 def postData(imageid):
     content = request.get_json()
 
-    if len(content['coordinates']) == 0:
+    if 'coordinates' in content:
+        if len(content['coordinates']) == 0:
+            return("ERROR: No coordinates !")
+    else:
         return("ERROR: No coordinates !")
     
     global window_size
@@ -156,14 +159,14 @@ def postData(imageid):
     x = Image(content, imageid)
     x.datafile = cv2.imread("images/image{}.jpg".format(imageid))
 
-    # means = x.clusterData(number_of_classes)
-    # means = x.checkMeans(means, window_size)
+    means = x.clusterData(number_of_classes)
+    means = x.checkMeans(means, window_size)
 
 
     global patches
-    # patches += x.extract(means, window_size)  
-    mockup_means = x.checkMeans([[400, 400], [256, 399], [534, 312], [235, 345], [508, 400], [402, 540]], window_size)
-    patches += x.extract(mockup_means, window_size)
+    patches += x.extract(means, window_size)  
+    # mockup_means = x.checkMeans([[400, 400], [256, 399], [534, 312], [235, 345], [508, 400], [402, 540]], window_size)
+    # patches += x.extract(mockup_means, window_size)
     
     print("Data Received!")
     return("Done!")
@@ -200,6 +203,7 @@ def purge():
 
     if os.path.isdir('output'):
         shutil.rmtree('output/')
+        os.mkdir('output');
 
     return("OK")
 

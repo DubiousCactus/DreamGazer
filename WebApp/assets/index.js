@@ -23,6 +23,7 @@ var image = {};
 var previousClock = null;
 var i = 0;
 var read = false;
+var gazing = true;
 var coords = new Array(photos.length);
 var interval = 25; //ms
 
@@ -41,13 +42,16 @@ function getImageInfo() {
 
 function changeImage() {
     if (i >= photos.length) {
-        webgazer.end();
+        //webgazer.end();
         submit();
         return;
     }
 
     read = false;
-    sendData();
+
+    if (gazing)
+        sendData();
+
     $('.gaze').fadeOut('fast');
     $('.gaze').attr('src', photos[i++]).fadeIn('slow');
     read = true;
@@ -66,7 +70,7 @@ function slideShow() {
     getScreenInfo();
     getImageInfo();
     read = true;
-    window.setInterval(changeImage, 2000);
+    window.setInterval(changeImage, 10000);
 }
 
 function sendData() {
@@ -89,20 +93,21 @@ function sendData() {
         data: JSON.stringify(json),
         success: function (data) {
             console.log(data);
-            coords[i] = null;
-            json = null;
+            //coords[i] = null;
+            //json = null;
         }
     });
 
 }
 
 function submit() {
+    read = false;
+    gazing = false;
     $.get(BACKEND_URL + '/api/mosaic', function (data) {
         console.log(data);
         photos = [];
         i = 0;
-        obj = JSON.parse(data);
-        obj.forEach(function(url) {
+        data.forEach(function(url) {
             photos.push(BACKEND_URL + url);
         });
     });
@@ -122,6 +127,7 @@ window.onload = function () {
     });
 
 
+    var cnt = 0
     function setListener() {
         webgazer.setRegression('ridge') /* currently must set regression and tracker */
             .setTracker('clmtrackr')
@@ -129,7 +135,8 @@ window.onload = function () {
                 if (data == null) {
                     return;
                 }
-                //if (read && (previousClock == null || (clock - previousClock) >= interval)) {
+                //if (read && (cnt % 8 == 0)) {
+                if (read) {
                     if (typeof coords[i] == 'undefined') {
                         coords[i] = [];
                     }
@@ -138,7 +145,9 @@ window.onload = function () {
                         'x': data.x,
                         'y': data.y
                     });
-                //}
+
+                    cnt++;
+                }
             })
             .begin()
             .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
