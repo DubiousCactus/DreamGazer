@@ -6,6 +6,7 @@ This project was created during AUHack 2018. Dream Glazer is an Art experiment: 
 
 ## Why ?
 
+Google's DeepDream neural network has been around for quite some time now. Although it creates fantastic psychedelic images, it still lacks the best part of human dreaming: the rapid eye movements during the so-called REM sleep. So why not combine human eye interaction with DeepDream somehow ?
 Eye tracking seemed like an interesting and challenging thing to implement, and we wanted to hack something creative for our first hackathon. Combining Art with computers seemed like an exciting idea !
 
 ## How ?
