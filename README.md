@@ -1,6 +1,6 @@
 ## Welcome to Dream Gazer
 
-![DreamGazer](https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/631/335/datas/gallery.jpg)
+![DreamGazer](dreamgazer.png)
 
 This project was created during AUHack 2018. Dream Glazer is an Art experiment: gaze at pictures and admire the uncanny outcome you just created.
 
