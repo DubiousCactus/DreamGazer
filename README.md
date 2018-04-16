@@ -2,7 +2,7 @@
 
 ![DreamGazer](dreamgazer.png)
 
-This project was created during AUHack 2018. Dream Glazer is an Art experiment: gaze at pictures and admire the uncanny outcome you just created.
+This project was created during AUHack 2018. Dream Gazer is an Art experiment: gaze at pictures and admire the uncanny outcome you just created.
 
 ## Why ?
 
