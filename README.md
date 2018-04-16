@@ -1,35 +1,21 @@
 ## Welcome to Dream Gazer
 
-This project was created during AUHack 2018. Dream Glazer is an Art experiment: glaze at portraits and admire the uncanny outcome you just created.
+This project was created during AUHack 2018. Dream Glazer is an Art experiment: gaze at pictures and admire the uncanny outcome you just created.
 
-### Markdown
+## Why ?
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Eye tracking seemed like an interesting and challenging thing to implement, and we wanted to hack something creative for our first hackathon. Combining Art with computers seemed like an exciting idea !
 
-```markdown
-Syntax highlighted code block
+## How ?
 
-# Header 1
-## Header 2
-### Header 3
+We have used the [WebGazer.js]() open source library to handle the gaze tracking part. The web app communicates with a Python back-end using the [Flask]() micro-framework, which clusters the gaze coordinates for each image. The mean of those clusters allow us to determine regions where the user has been gazing the most, and we extract patches of the image around those mean vectors, in order to create a mosaic of all patches. The resulting mosaic is then fed into Google DeepDream to obtain a psychedelic and blended image.
 
-- Bulleted
-- List
+### How to use it ?
 
-1. Numbered
-2. List
+The project needs some bug-fixing and polishing, but if you insist on testing it, you can run the python backend after installing [Flask]() in the *BackEnd* folder, and then a simple HTTP server in the *WebApp* folder. You will need to go through the calibration phase, which will only work properly if you carefully follow the cursor with your eyes, by going quite slowly, and by standing straight and close to your webcam, with as much light as possible.
 
-**Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
-```
+### What next ?
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/M4gicT0/DreamGlazer/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+This project will eventually be finished and improved as soon as the team has time for it :) 
+Any help will be appreciated !
